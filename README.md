@@ -1,3 +1,5 @@
+Copyright (C) 2026 Val. Licensed under GPL-3.0-or-later. See the [LICENSE](LICENSE) file.
+
 # Elite Dangerous HUD
 
 A GTK 3, GTK 4 / Libadwaita, and GNOME Shell theme based on the Elite Dangerous ship cockpit. First target is Ubuntu 24.04 / GNOME 46 / Libadwaita, plus GNOME Shell on GNOME 46. GTK 3 is included as a later pass. Icons stay Adwaita.
