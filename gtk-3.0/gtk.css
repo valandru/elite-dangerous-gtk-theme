@@ -1,0 +1,470 @@
+/*
+ * Elite Dangerous HUD — GTK 3 later pass (Ubuntu 22.04 / GTK 3.24).
+ * Not the first acceptance target. Selectors follow GTK 3.24:
+ * no :focus-within and no text-transform (those are GTK 4).
+ *
+ * Palette values are copied from src/_palette.css. This file does not
+ * import that palette and does not import the Shell stylesheet.
+ */
+
+@define-color hud_void #080A0C;
+@define-color hud_panel #0D1115;
+@define-color hud_surface #141A21;
+@define-color hud_orange #FF7100;
+@define-color hud_orange_bright #FF9E44;
+@define-color hud_orange_dim rgba(255, 113, 0, 0.25);
+@define-color hud_orange_glow rgba(255, 113, 0, 0.45);
+@define-color hud_cyan #00D8FF;
+@define-color hud_cyan_dim rgba(0, 216, 255, 0.20);
+@define-color hud_red #FF2A00;
+@define-color hud_green #00E676;
+@define-color hud_text #FFB067;
+@define-color hud_text_bright #FFE2C4;
+@define-color hud_text_dim #7A5234;
+
+@define-color theme_fg_color @hud_text;
+@define-color theme_text_color @hud_text;
+@define-color theme_bg_color @hud_void;
+@define-color theme_base_color @hud_panel;
+@define-color theme_selected_bg_color @hud_orange;
+@define-color theme_selected_fg_color @hud_void;
+@define-color insensitive_bg_color @hud_surface;
+@define-color insensitive_fg_color @hud_text_dim;
+@define-color borders @hud_orange_dim;
+@define-color warning_color @hud_orange_bright;
+@define-color error_color @hud_red;
+@define-color success_color @hud_green;
+
+window,
+window.csd,
+.background {
+  background-color: @hud_void;
+  color: @hud_text;
+}
+
+window.csd {
+  border: 1px solid @hud_orange_dim;
+  border-radius: 0;
+}
+
+window.csd.dialog,
+window.csd.messagedialog,
+window.dialog {
+  border-radius: 2px;
+  background-color: @hud_panel;
+}
+
+window.csd.maximized,
+window.csd.fullscreen,
+window.csd.tiled {
+  border-radius: 0;
+}
+
+headerbar {
+  background-color: @hud_panel;
+  color: @hud_text;
+  border-bottom: 1px solid @hud_orange;
+  box-shadow: 0 1px 6px @hud_orange_dim;
+  border-radius: 0;
+}
+
+headerbar .title,
+headerbar .subtitle {
+  letter-spacing: 1px;
+  color: @hud_orange;
+}
+
+headerbar .subtitle {
+  color: @hud_text_dim;
+  letter-spacing: 0.8px;
+}
+
+button {
+  border-radius: 2px;
+  background-color: rgba(255, 113, 0, 0.08);
+  background-image: none;
+  border: 1px solid @hud_orange_dim;
+  color: @hud_orange;
+  box-shadow: none;
+  padding: 6px 12px;
+  min-height: 24px;
+  min-width: 16px;
+}
+
+button:hover {
+  background-color: @hud_orange_dim;
+  background-image: none;
+  border-color: @hud_orange;
+  color: @hud_text_bright;
+  box-shadow: 0 0 8px @hud_orange_glow;
+}
+
+button:active,
+button:checked {
+  background-color: @hud_orange;
+  background-image: none;
+  border-color: @hud_orange;
+  color: @hud_void;
+  box-shadow: none;
+}
+
+button:disabled {
+  color: @hud_text_dim;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  opacity: 0.65;
+}
+
+button.flat {
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+button.flat:hover {
+  background-color: @hud_orange_dim;
+  border-color: @hud_orange;
+  color: @hud_text_bright;
+  box-shadow: 0 0 8px @hud_orange_glow;
+}
+
+button.suggested-action {
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid @hud_cyan;
+  color: @hud_cyan;
+  letter-spacing: 0.8px;
+}
+
+button.suggested-action:hover,
+button.suggested-action:active,
+button.suggested-action:checked {
+  background-color: @hud_cyan;
+  background-image: none;
+  border-color: @hud_cyan;
+  color: @hud_void;
+  box-shadow: 0 0 8px @hud_cyan_dim;
+}
+
+button.destructive-action {
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid @hud_red;
+  color: @hud_red;
+}
+
+button.destructive-action:hover,
+button.destructive-action:active,
+button.destructive-action:checked {
+  background-color: @hud_red;
+  background-image: none;
+  border-color: @hud_red;
+  color: @hud_text_bright;
+  box-shadow: 0 0 8px rgba(255, 42, 0, 0.45);
+}
+
+button.circular {
+  border-radius: 9999px;
+  padding: 0;
+  min-width: 34px;
+  min-height: 34px;
+}
+
+.linked > button:not(:first-child):not(:last-child) {
+  border-radius: 0;
+}
+
+.linked > button:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.linked > button:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+headerbar button.titlebutton,
+button.titlebutton,
+windowcontrols > button {
+  border-radius: 2px;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 4px;
+  background-color: rgba(255, 113, 0, 0.08);
+  background-image: none;
+  border: 1px solid @hud_orange_dim;
+  color: @hud_orange;
+  box-shadow: none;
+}
+
+button.titlebutton:hover,
+windowcontrols > button:hover {
+  background-color: @hud_orange_dim;
+  background-image: none;
+  border-color: @hud_orange;
+  color: @hud_text_bright;
+  box-shadow: 0 0 8px @hud_orange_glow;
+}
+
+button.titlebutton.close:hover,
+windowcontrols > button.close:hover {
+  background-color: @hud_red;
+  background-image: none;
+  border-color: @hud_red;
+  color: @hud_text_bright;
+  box-shadow: 0 0 8px @hud_red;
+}
+
+entry,
+entry.search,
+searchentry,
+spinbutton {
+  background-color: @hud_panel;
+  color: @hud_text;
+  border: 1px solid @hud_orange_dim;
+  border-radius: 2px;
+  caret-color: @hud_cyan;
+  box-shadow: none;
+}
+
+entry placeholder,
+entry > placeholder {
+  color: @hud_text_dim;
+}
+
+entry:focus,
+entry.search:focus,
+searchentry:focus,
+spinbutton:focus {
+  border-color: @hud_cyan;
+  box-shadow: 0 0 6px @hud_cyan_dim;
+}
+
+entry:disabled,
+spinbutton:disabled {
+  color: @hud_text_dim;
+  background-color: @hud_surface;
+}
+
+entry.error {
+  border-color: @hud_red;
+  caret-color: @hud_red;
+}
+
+entry.warning {
+  border-color: @hud_orange_bright;
+}
+
+textview,
+textview text,
+list,
+treeview.view {
+  background-color: @hud_void;
+  color: @hud_text;
+}
+
+.navigation-sidebar,
+placessidebar {
+  background-color: @hud_panel;
+  color: @hud_text;
+  border-right: 1px solid @hud_orange_dim;
+}
+
+.navigation-sidebar row:hover,
+placessidebar row:hover,
+list row:hover {
+  background-color: @hud_surface;
+}
+
+list row:selected,
+treeview.view:selected {
+  background-color: @hud_orange_dim;
+  color: @hud_text_bright;
+}
+
+.navigation-sidebar row:selected,
+placessidebar row:selected {
+  background-color: @hud_orange_dim;
+  color: @hud_text_bright;
+  box-shadow: inset 3px 0 0 @hud_orange;
+}
+
+list.boxed-list,
+.card {
+  background-color: @hud_panel;
+  color: @hud_text;
+  border: 1px solid @hud_orange_dim;
+  border-radius: 2px;
+}
+
+list.boxed-list > row:first-child {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}
+
+list.boxed-list > row:last-child {
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+/* Checked switch is hud_orange with a hud_void slider. Not hud_green. */
+switch {
+  border-radius: 2px;
+  background-color: @hud_surface;
+  background-image: none;
+  border: 1px solid @hud_orange_dim;
+  color: @hud_text;
+  min-width: 48px;
+  min-height: 26px;
+}
+
+switch:checked {
+  background-color: @hud_orange;
+  background-image: none;
+  border-color: @hud_orange;
+  color: @hud_void;
+}
+
+switch slider {
+  border-radius: 2px;
+  background-color: @hud_text_dim;
+  background-image: none;
+  min-width: 18px;
+  min-height: 18px;
+  box-shadow: none;
+}
+
+switch:checked slider {
+  background-color: @hud_void;
+}
+
+check {
+  border-radius: 1px;
+  border: 1px solid @hud_orange;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  min-width: 16px;
+  min-height: 16px;
+  -gtk-icon-source: none;
+}
+
+check:checked,
+check:indeterminate {
+  background-color: @hud_orange;
+  color: @hud_void;
+  box-shadow: 0 0 6px @hud_orange_glow;
+  -gtk-icon-source: none;
+}
+
+radio {
+  border-radius: 100%;
+  border: 1px solid @hud_orange;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  min-width: 16px;
+  min-height: 16px;
+  -gtk-icon-source: none;
+}
+
+radio:checked,
+radio:indeterminate {
+  background-color: @hud_cyan;
+  border-color: @hud_orange;
+  color: @hud_void;
+  box-shadow: inset 0 0 0 3px @hud_panel, 0 0 6px @hud_cyan_dim;
+  -gtk-icon-source: none;
+}
+
+progressbar trough,
+scale trough {
+  border-radius: 0;
+  background-color: @hud_surface;
+  border: 1px solid @hud_orange_dim;
+  min-height: 6px;
+}
+
+progressbar progress,
+scale highlight {
+  border-radius: 0;
+  background-color: @hud_orange;
+  background-image: none;
+  box-shadow: 0 0 6px @hud_orange_glow;
+}
+
+scale:not(.color) slider {
+  border-radius: 1px;
+  background-color: @hud_cyan;
+  background-image: none;
+  box-shadow: 0 0 6px @hud_cyan_dim;
+  min-width: 6px;
+  min-height: 16px;
+}
+
+scrollbar slider {
+  border-radius: 0;
+  background-color: @hud_orange_dim;
+  min-width: 6px;
+  min-height: 6px;
+}
+
+scrollbar.vertical slider {
+  min-width: 6px;
+}
+
+scrollbar.horizontal slider {
+  min-height: 6px;
+}
+
+scrollbar slider:hover,
+scrollbar slider:active {
+  background-color: @hud_orange;
+}
+
+notebook > header > tabs > tab,
+notebook tab {
+  border-radius: 0;
+  background-color: @hud_void;
+  color: @hud_text_dim;
+  border: 1px solid @hud_orange_dim;
+}
+
+notebook > header > tabs > tab:checked,
+notebook tab:checked {
+  background-color: @hud_panel;
+  color: @hud_text_bright;
+  border-top: 2px solid @hud_orange;
+}
+
+popover > contents,
+popover > arrow,
+menu,
+tooltip {
+  background-color: rgba(13, 17, 21, 0.96);
+  color: @hud_text;
+  border: 1px solid @hud_orange;
+}
+
+popover > contents,
+menu,
+tooltip {
+  border-radius: 2px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+}
+
+menu menuitem:hover {
+  background-color: @hud_orange_dim;
+  color: @hud_text_bright;
+}
+
+infobar.success,
+.systems-nominal {
+  background-color: rgba(0, 230, 118, 0.16);
+  color: @hud_green;
+  border: 1px solid @hud_green;
+  border-radius: 2px;
+}

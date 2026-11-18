@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Elite-Dangerous-HUD
+Comment=Elite Dangerous holographic ship HUD
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+Name=Elite-Dangerous-HUD
+GtkTheme=Elite-Dangerous-HUD
+IconTheme=Adwaita
+CursorTheme=Adwaita
