@@ -1,0 +1,709 @@
+/*
+ * Elite Dangerous HUD — GTK 4 / Libadwaita for Ubuntu 24.04 (GNOME 46).
+ *
+ * Palette values are copied from src/_palette.css. This file does not
+ * import that palette, and it does not import the GNOME Shell stylesheet.
+ *
+ * Libadwaita apps read this file when it is installed as
+ * ~/.config/gtk-4.0/gtk.css (optional, off by default). Named colors below
+ * recolor widgets Libadwaita draws itself. Rules after that square the v1
+ * surfaces: headerbars, buttons, entries, lists, and cards.
+ */
+
+/* Required Libadwaita named colors. Literals, so they still apply if a
+ * later rule is ignored. accent_bg is HUD orange (switches, progress,
+ * selection). accent is HUD cyan (focus and suggested actions). */
+@define-color accent_color #00D8FF;
+@define-color accent_bg_color #FF7100;
+@define-color accent_fg_color #080A0C;
+@define-color window_bg_color #080A0C;
+@define-color window_fg_color #FFB067;
+@define-color view_bg_color #080A0C;
+@define-color view_fg_color #FFB067;
+@define-color headerbar_bg_color #0D1115;
+@define-color headerbar_fg_color #FFB067;
+@define-color card_bg_color #0D1115;
+@define-color popover_bg_color #0D1115;
+
+/* Copied palette. */
+@define-color hud_void #080A0C;
+@define-color hud_panel #0D1115;
+@define-color hud_surface #141A21;
+@define-color hud_orange #FF7100;
+@define-color hud_orange_bright #FF9E44;
+@define-color hud_orange_dim rgba(255, 113, 0, 0.25);
+@define-color hud_orange_glow rgba(255, 113, 0, 0.45);
+@define-color hud_cyan #00D8FF;
+@define-color hud_cyan_dim rgba(0, 216, 255, 0.20);
+@define-color hud_red #FF2A00;
+@define-color hud_green #00E676;
+@define-color hud_text #FFB067;
+@define-color hud_text_bright #FFE2C4;
+@define-color hud_text_dim #7A5234;
+
+/* Further Libadwaita names so widgets we do not restyle stay in the HUD. */
+@define-color destructive_color @hud_red;
+@define-color destructive_bg_color @hud_red;
+@define-color destructive_fg_color @hud_text_bright;
+@define-color success_color @hud_green;
+@define-color success_bg_color @hud_green;
+@define-color success_fg_color @hud_void;
+@define-color warning_color @hud_orange_bright;
+@define-color warning_bg_color @hud_orange;
+@define-color warning_fg_color @hud_void;
+@define-color error_color @hud_red;
+@define-color error_bg_color @hud_red;
+@define-color error_fg_color @hud_text_bright;
+@define-color headerbar_border_color @hud_orange_glow;
+@define-color headerbar_backdrop_color @hud_void;
+@define-color headerbar_shade_color @hud_orange_dim;
+@define-color headerbar_darker_shade_color @hud_orange_dim;
+@define-color card_fg_color @hud_text;
+@define-color card_shade_color @hud_orange_dim;
+@define-color popover_fg_color @hud_text;
+@define-color popover_shade_color @hud_orange_dim;
+@define-color dialog_bg_color @hud_panel;
+@define-color dialog_fg_color @hud_text;
+@define-color sidebar_bg_color @hud_panel;
+@define-color sidebar_fg_color @hud_text;
+@define-color sidebar_backdrop_color @hud_void;
+@define-color sidebar_border_color @hud_orange_dim;
+@define-color sidebar_shade_color @hud_orange_dim;
+@define-color secondary_sidebar_bg_color @hud_panel;
+@define-color secondary_sidebar_fg_color @hud_text;
+@define-color secondary_sidebar_backdrop_color @hud_void;
+@define-color secondary_sidebar_border_color @hud_orange_dim;
+@define-color secondary_sidebar_shade_color @hud_orange_dim;
+@define-color shade_color rgba(0, 0, 0, 0.55);
+@define-color scrollbar_outline_color @hud_void;
+@define-color theme_fg_color @hud_text;
+@define-color theme_text_color @hud_text;
+@define-color theme_bg_color @hud_void;
+@define-color theme_base_color @hud_panel;
+@define-color theme_selected_bg_color @hud_orange;
+@define-color theme_selected_fg_color @hud_void;
+@define-color insensitive_bg_color @hud_surface;
+@define-color insensitive_fg_color @hud_text_dim;
+@define-color borders @hud_orange_dim;
+
+/*
+ * Leftover radii. Libadwaita 1.5 does not draw these with border-radius,
+ * so gtk.css cannot square them:
+ * - avatar: AdwAvatar paints a circle in its paintable.
+ * - spinner: AdwSpinnerPaintable paints a circular arc.
+ * button.circular stays a circle (9999px). That class is the shape contract
+ * for icon buttons; a 2px radius clips the glyph. Window edges are 0.
+ * Do not read the rules below as "every radius is 2px".
+ */
+
+window,
+window.csd,
+.background {
+  background-color: @hud_void;
+  color: @hud_text;
+}
+
+window.csd {
+  border: 1px solid @hud_orange_dim;
+  border-radius: 0;
+  outline-color: @hud_orange_dim;
+}
+
+window.csd.dialog,
+window.csd.messagedialog,
+window.dialog,
+dialog.floating {
+  border-radius: 2px;
+  background-color: @hud_panel;
+}
+
+window.csd.maximized,
+window.csd.fullscreen,
+window.csd.tiled,
+window.csd.tiled-top,
+window.csd.tiled-left,
+window.csd.tiled-right,
+window.csd.tiled-bottom {
+  border-radius: 0;
+}
+
+headerbar {
+  background-color: @hud_panel;
+  color: @hud_text;
+  border-bottom: 1px solid @hud_orange;
+  box-shadow: 0 1px 6px @hud_orange_dim;
+  border-radius: 0;
+}
+
+headerbar .title,
+windowtitle .title,
+preferencesgroup .title {
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: @hud_orange;
+}
+
+headerbar .subtitle,
+windowtitle .subtitle,
+preferencesgroup .subtitle {
+  color: @hud_text_dim;
+  letter-spacing: 0.8px;
+}
+
+headerbar:backdrop,
+headerbar:backdrop .title {
+  color: @hud_text_dim;
+}
+
+button {
+  border-radius: 2px;
+  background-color: rgba(255, 113, 0, 0.08);
+  background-image: none;
+  border: 1px solid @hud_orange_dim;
+  color: @hud_orange;
+  box-shadow: none;
+  padding: 6px 12px;
+  min-height: 24px;
+  min-width: 16px;
+}
+
+button:hover {
+  background-color: @hud_orange_dim;
+  background-image: none;
+  border-color: @hud_orange;
+  color: @hud_text_bright;
+  box-shadow: 0 0 8px @hud_orange_glow;
+}
+
+button:active,
+button:checked {
+  background-color: @hud_orange;
+  background-image: none;
+  border-color: @hud_orange;
+  color: @hud_void;
+  box-shadow: none;
+}
+
+button:disabled {
+  color: @hud_text_dim;
+  border-color: @hud_orange_dim;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  opacity: 0.65;
+}
+
+button.flat {
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+button.flat:hover {
+  background-color: @hud_orange_dim;
+  border-color: @hud_orange;
+  color: @hud_text_bright;
+  box-shadow: 0 0 8px @hud_orange_glow;
+}
+
+button.suggested-action {
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid @hud_cyan;
+  color: @hud_cyan;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+button.suggested-action:hover,
+button.suggested-action:active,
+button.suggested-action:checked {
+  background-color: @hud_cyan;
+  background-image: none;
+  border-color: @hud_cyan;
+  color: @hud_void;
+  box-shadow: 0 0 8px @hud_cyan_dim;
+}
+
+button.destructive-action {
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid @hud_red;
+  color: @hud_red;
+}
+
+button.destructive-action:hover,
+button.destructive-action:active,
+button.destructive-action:checked {
+  background-color: @hud_red;
+  background-image: none;
+  border-color: @hud_red;
+  color: @hud_text_bright;
+  box-shadow: 0 0 8px rgba(255, 42, 0, 0.45);
+}
+
+/* Explicit circular controls stay round. See the leftover note above. */
+button.circular,
+menubutton.circular > button {
+  border-radius: 9999px;
+  padding: 0;
+  min-width: 34px;
+  min-height: 34px;
+}
+
+.linked > button:not(:first-child):not(:last-child) {
+  border-radius: 0;
+}
+
+.linked > button:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.linked > button:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+button.card,
+.card {
+  background-color: @hud_panel;
+  color: @hud_text;
+  border: 1px solid @hud_orange_dim;
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+button.card {
+  padding: 0;
+}
+
+windowcontrols > button,
+button.titlebutton {
+  border-radius: 2px;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 4px;
+  margin: 0 2px;
+  background-color: rgba(255, 113, 0, 0.08);
+  background-image: none;
+  border: 1px solid @hud_orange_dim;
+  color: @hud_orange;
+  box-shadow: none;
+}
+
+windowcontrols > button > image,
+button.titlebutton > image {
+  background-color: transparent;
+  background-image: none;
+  border-radius: 2px;
+  padding: 0;
+  box-shadow: none;
+}
+
+button.titlebutton:hover,
+windowcontrols > button:hover {
+  background-color: @hud_orange_dim;
+  background-image: none;
+  border-color: @hud_orange;
+  color: @hud_text_bright;
+  box-shadow: 0 0 8px @hud_orange_glow;
+}
+
+/* Libadwaita paints the round control on the image, including on :hover. */
+windowcontrols > button:hover > image,
+windowcontrols > button:active > image,
+button.titlebutton:hover > image,
+button.titlebutton:active > image {
+  background-color: transparent;
+  background-image: none;
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+button.titlebutton.close:hover,
+windowcontrols > button.close:hover {
+  background-color: @hud_red;
+  background-image: none;
+  border-color: @hud_red;
+  color: @hud_text_bright;
+  box-shadow: 0 0 8px @hud_red;
+}
+
+button.titlebutton.close:hover > image,
+windowcontrols > button.close:hover > image {
+  background-color: transparent;
+  color: @hud_text_bright;
+}
+
+entry,
+searchentry,
+spinbutton {
+  background-color: @hud_panel;
+  color: @hud_text;
+  border: 1px solid @hud_orange_dim;
+  border-radius: 2px;
+  caret-color: @hud_cyan;
+  box-shadow: none;
+}
+
+entry > text,
+spinbutton > text {
+  caret-color: @hud_cyan;
+}
+
+entry > placeholder,
+entry placeholder {
+  color: @hud_text_dim;
+}
+
+entry:focus-within,
+searchentry:focus-within,
+spinbutton:focus-within {
+  border-color: @hud_cyan;
+  box-shadow: 0 0 6px @hud_cyan_dim;
+}
+
+entry:disabled,
+searchentry:disabled,
+spinbutton:disabled {
+  color: @hud_text_dim;
+  background-color: @hud_surface;
+}
+
+entry.error {
+  border-color: @hud_red;
+  caret-color: @hud_red;
+}
+
+entry.warning {
+  border-color: @hud_orange_bright;
+}
+
+selection:focus-within {
+  background-color: @hud_cyan_dim;
+}
+
+textview,
+textview > text,
+list,
+listview,
+columnview.view,
+treeview.view {
+  background-color: @hud_void;
+  color: @hud_text;
+}
+
+navigation-split-view .sidebar-pane,
+overlay-split-view .sidebar-pane,
+.navigation-sidebar,
+placessidebar {
+  background-color: @hud_panel;
+  color: @hud_text;
+  border-right: 1px solid @hud_orange_dim;
+}
+
+.navigation-sidebar row:hover,
+placessidebar row:hover,
+list > row.activatable:hover {
+  background-color: @hud_surface;
+}
+
+listview > row:selected,
+list > row:selected {
+  background-color: @hud_orange_dim;
+  color: @hud_text_bright;
+}
+
+.navigation-sidebar row:selected,
+placessidebar row:selected {
+  background-color: @hud_orange_dim;
+  color: @hud_text_bright;
+  box-shadow: inset 3px 0 0 @hud_orange;
+}
+
+list.boxed-list {
+  background-color: @hud_panel;
+  color: @hud_text;
+  border: 1px solid @hud_orange_dim;
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+list.boxed-list > row {
+  background-color: transparent;
+  border-bottom: 1px solid @hud_orange_dim;
+  border-radius: 0;
+}
+
+list.boxed-list > row:first-child,
+list.boxed-list > row:first-child.expander row.header {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}
+
+list.boxed-list > row:last-child,
+list.boxed-list > row:last-child.expander:not(:checked) row.header,
+list.boxed-list > row:last-child.expander:checked list.nested,
+list.boxed-list > row:last-child.expander:checked list.nested > row:last-child {
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom-width: 0;
+}
+
+/* Switch track is a 2px rectangle. Checked fill is hud_orange and the
+ * slider is hud_void. hud_green is not a switch color. */
+switch {
+  border-radius: 2px;
+  background-color: @hud_surface;
+  background-image: none;
+  border: 1px solid @hud_orange_dim;
+  color: @hud_text;
+  min-width: 48px;
+  min-height: 26px;
+  padding: 3px;
+}
+
+switch:checked {
+  background-color: @hud_orange;
+  background-image: none;
+  border-color: @hud_orange;
+  color: @hud_void;
+}
+
+switch > slider {
+  border-radius: 2px;
+  background-color: @hud_text_dim;
+  background-image: none;
+  min-width: 18px;
+  min-height: 18px;
+  box-shadow: none;
+}
+
+switch:checked > slider {
+  background-color: @hud_void;
+}
+
+/* Checkboxes are the 1px treatment. Radios are a circular reticle.
+ * Neither uses the switch drawing. */
+check {
+  border-radius: 1px;
+  border: 1px solid @hud_orange;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  min-width: 16px;
+  min-height: 16px;
+  padding: 2px;
+  -gtk-icon-source: none;
+}
+
+check:checked,
+check:indeterminate {
+  background-color: @hud_orange;
+  color: @hud_void;
+  box-shadow: 0 0 6px @hud_orange_glow;
+  -gtk-icon-source: none;
+}
+
+radio {
+  border-radius: 100%;
+  border: 1px solid @hud_orange;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  min-width: 16px;
+  min-height: 16px;
+  padding: 2px;
+  -gtk-icon-source: none;
+}
+
+radio:checked,
+radio:indeterminate {
+  background-color: @hud_cyan;
+  border-color: @hud_orange;
+  color: @hud_void;
+  box-shadow: inset 0 0 0 3px @hud_panel, 0 0 6px @hud_cyan_dim;
+  -gtk-icon-source: none;
+}
+
+checkbutton.selection-mode check {
+  border-radius: 1px;
+  padding: 2px;
+}
+
+checkbutton.selection-mode radio {
+  border-radius: 100%;
+}
+
+progressbar > trough,
+progressbar trough,
+scale > trough,
+scale trough {
+  border-radius: 0;
+  background-color: @hud_surface;
+  border: 1px solid @hud_orange_dim;
+  min-height: 6px;
+}
+
+progressbar > trough > progress,
+progressbar progress,
+scale > trough > highlight,
+scale highlight {
+  border-radius: 0;
+  background-color: @hud_orange;
+  background-image: none;
+  box-shadow: 0 0 6px @hud_orange_glow;
+}
+
+scale:not(.color) > trough > slider {
+  border-radius: 1px;
+  background-color: @hud_cyan;
+  background-image: none;
+  box-shadow: 0 0 6px @hud_cyan_dim;
+  min-width: 6px;
+  min-height: 16px;
+  margin: -6px;
+  transform: none;
+}
+
+scale.vertical:not(.color) > trough > slider {
+  min-width: 16px;
+  min-height: 6px;
+}
+
+scale.marks-before > trough > slider,
+scale.marks-after > trough > slider {
+  border-radius: 1px;
+  transform: none;
+}
+
+scrollbar slider {
+  border-radius: 0;
+  background-color: @hud_orange_dim;
+  min-width: 6px;
+  min-height: 6px;
+}
+
+scrollbar.vertical slider {
+  min-width: 6px;
+}
+
+scrollbar.horizontal slider {
+  min-height: 6px;
+}
+
+scrollbar slider:hover,
+scrollbar slider:active {
+  background-color: @hud_orange;
+}
+
+notebook > header > tabs > tab {
+  border-radius: 0;
+  background-color: @hud_void;
+  color: @hud_text_dim;
+  border: 1px solid @hud_orange_dim;
+  box-shadow: none;
+}
+
+notebook > header > tabs > tab:checked {
+  background-color: @hud_panel;
+  color: @hud_text_bright;
+  border-top: 2px solid @hud_orange;
+}
+
+tabbar tab,
+tabbar tabbox > tabboxchild {
+  border-radius: 0;
+  background-color: @hud_void;
+  color: @hud_text_dim;
+}
+
+tabbar tab:selected,
+tabbar tab:checked {
+  background-color: @hud_panel;
+  color: @hud_text_bright;
+  border-radius: 0;
+  box-shadow: inset 0 2px 0 @hud_orange;
+}
+
+tabbar tab button.image-button {
+  border-radius: 2px;
+}
+
+tabthumbnail,
+tabthumbnail .card,
+tabthumbnail .card picture {
+  border-radius: 2px;
+}
+
+popover > contents,
+popover > arrow,
+popover.menu > contents,
+menu,
+tooltip {
+  background-color: rgba(13, 17, 21, 0.96);
+  color: @hud_text;
+  border: 1px solid @hud_orange;
+}
+
+popover > contents,
+popover.menu > contents,
+menu,
+tooltip {
+  border-radius: 2px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+}
+
+modelbutton:hover,
+popover.menu modelbutton:hover {
+  background-color: @hud_orange_dim;
+  color: @hud_text_bright;
+}
+
+toast {
+  background-color: @hud_panel;
+  color: @hud_text;
+  border: 1px solid @hud_orange;
+  border-radius: 2px;
+  box-shadow: 0 0 8px @hud_orange_glow;
+}
+
+banner {
+  background-color: @hud_panel;
+  color: @hud_orange;
+  border-bottom: 1px solid @hud_orange;
+  border-radius: 0;
+}
+
+/* hud_green is only for success and systems-nominal banners. */
+banner.success,
+infobar.success,
+.systems-nominal {
+  background-color: rgba(0, 230, 118, 0.16);
+  color: @hud_green;
+  border: 1px solid @hud_green;
+  border-radius: 2px;
+}
+
+bottom-sheet > sheet,
+bottom-sheet > sheet > outline {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  background-color: @hud_panel;
+}
+
+bottom-sheet > sheet > drag-handle {
+  border-radius: 2px;
+  background-color: @hud_orange_dim;
+}
+
+columnview.view > header > button,
+treeview.view > header > button {
+  background-color: @hud_panel;
+  background-image: none;
+  color: @hud_text;
+  border-radius: 0;
+  box-shadow: none;
+}

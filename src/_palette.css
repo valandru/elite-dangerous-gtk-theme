@@ -1,0 +1,23 @@
+/*
+ * Elite Dangerous HUD palette.
+ *
+ * Token source of truth for this theme. gtk-3.0/gtk.css, gtk-4.0/gtk.css,
+ * and gnome-shell/gnome-shell.css each copy these values in the form that
+ * engine accepts. This file is not imported by those stylesheets.
+ * GNOME Shell CSS does not accept GTK @define-color.
+ */
+
+@define-color hud_void #080A0C;
+@define-color hud_panel #0D1115;
+@define-color hud_surface #141A21;
+@define-color hud_orange #FF7100;
+@define-color hud_orange_bright #FF9E44;
+@define-color hud_orange_dim rgba(255, 113, 0, 0.25);
+@define-color hud_orange_glow rgba(255, 113, 0, 0.45);
+@define-color hud_cyan #00D8FF;
+@define-color hud_cyan_dim rgba(0, 216, 255, 0.20);
+@define-color hud_red #FF2A00;
+@define-color hud_green #00E676;
+@define-color hud_text #FFB067;
+@define-color hud_text_bright #FFE2C4;
+@define-color hud_text_dim #7A5234;
